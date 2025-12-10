@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.target=Level4
+comment0.text=\r\n\ Level4\ \u2013\ Viertes\ Level\r\n\ Seitenwind\ (WindZone),\ Shooter\ und\ Follower.\r\n\ \r\n\ @author\ Felix\ Krusch\r\n\ @version\ 1.0\r\n
+comment1.params=
+comment1.target=Level4()
+comment2.params=
+comment2.target=void\ setup()
+comment3.params=
+comment3.target=void\ label()
+comment4.params=lives
+comment4.target=void\ showHUD(int)
+comment5.params=
+comment5.target=java.lang.String\ levelName()
+numComments=6

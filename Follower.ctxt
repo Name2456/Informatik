@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=Follower
+comment0.text=\r\n\ Follower\ \u2013\ Verfolgt\ den\ Spieler\r\n\ Bewegt\ sich\ jeden\ Takt\ einen\ Schritt\ auf\ den\ Player\ zu.\r\n\ \r\n\ @author\ Felix\ Krusch\r\n\ @version\ 1.0\r\n
+comment1.params=
+comment1.target=void\ act()
+comment1.text=\r\n\ Bewegungslogik\:\ Auf\ den\ Spieler\ zu\ bewegen.\r\n
+numComments=2

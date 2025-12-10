@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=RandomWalker
+comment0.text=\r\n\ RandomWalker\ \u2013\ Zuf\u00E4llig\ umherlaufender\ Gegner\r\n\ Bewegt\ sich\ jeden\ Takt\ in\ eine\ zuf\u00E4llige\ Richtung.\r\n\ \r\n\ @author\ Felix\ Krusch\r\n\ @version\ 1.0\r\n
+comment1.params=
+comment1.target=void\ act()
+comment1.text=\r\n\ Bewegungslogik\:\ Zuf\u00E4llige\ Richtung\ w\u00E4hlen.\r\n
+numComments=2

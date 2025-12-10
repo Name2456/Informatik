@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=BlueDot
+comment0.text=\r\n\ BlueDot\ \u2013\ Horizontal\ pendelnder\ Gegner\r\n\ Bewegt\ sich\ zwischen\ minX\ und\ maxX\ hin\ und\ her.\r\n\ \r\n\ @author\ Felix\ Krusch\r\n\ @version\ 1.0\r\n
+comment1.params=minX\ maxX\ speed
+comment1.target=BlueDot(int,\ int,\ int)
+comment1.text=\r\n\ Konstruktor\ mit\ allen\ Parametern.\r\n\ \r\n\ @param\ minX\ \ Linke\ Grenze\ des\ Bewegungsbereichs\r\n\ @param\ maxX\ \ Rechte\ Grenze\ des\ Bewegungsbereichs\r\n\ @param\ speed\ Geschwindigkeit\ (0\ \=\ zuf\u00E4llig\ 1-5)\r\n
+comment2.params=speed
+comment2.target=BlueDot(int)
+comment2.text=\r\n\ Konstruktor\ mit\ Standardgrenzen\ (120-480).\r\n\ \r\n\ @param\ speed\ Geschwindigkeit\ (0\ \=\ zuf\u00E4llig)\r\n
+comment3.params=
+comment3.target=void\ act()
+comment3.text=\r\n\ Bewegungslogik\:\ Horizontal\ pendeln.\r\n
+numComments=4

@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=Enemy
+comment0.text=\r\n\ Enemy\ \u2013\ Basisklasse\ f\u00FCr\ alle\ Gegner\r\n\ Enth\u00E4lt\ gemeinsame\ Hilfsmethoden.\r\n\ \r\n\ @author\ Felix\ Krusch\r\n\ @version\ 1.0\r\n
+comment1.params=dx\ dy
+comment1.target=void\ bounceBack(int,\ int)
+comment1.text=\r\n\ Korrekturschritt\ r\u00FCckw\u00E4rts\ (z.B.\ bei\ Wandkollision).\r\n\ \r\n\ @param\ dx\ Verschiebung\ in\ X-Richtung\ r\u00FCckg\u00E4ngig\ machen\r\n\ @param\ dy\ Verschiebung\ in\ Y-Richtung\ r\u00FCckg\u00E4ngig\ machen\r\n
+numComments=2

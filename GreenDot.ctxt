@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=GreenDot
+comment0.text=\r\n\ GreenDot\ \u2013\ Vertikal\ pendelnder\ Gegner\r\n\ Bewegt\ sich\ zwischen\ minY\ und\ maxY\ hin\ und\ her.\r\n\ \r\n\ @author\ Felix\ Krusch\r\n\ @version\ 1.0\r\n
+comment1.params=minY\ maxY\ speed
+comment1.target=GreenDot(int,\ int,\ int)
+comment1.text=\r\n\ Konstruktor\ mit\ Standardgr\u00F6\u00DFe\ (36\ px).\r\n
+comment2.params=minY\ maxY\ speed\ size
+comment2.target=GreenDot(int,\ int,\ int,\ int)
+comment2.text=\r\n\ Konstruktor\ mit\ allen\ Parametern.\r\n\ \r\n\ @param\ minY\ \ Obere\ Grenze\r\n\ @param\ maxY\ \ Untere\ Grenze\r\n\ @param\ speed\ Geschwindigkeit\r\n\ @param\ size\ \ Gr\u00F6\u00DFe\ in\ Pixeln\ (mind.\ 12)\r\n
+comment3.params=w
+comment3.target=void\ addedToWorld(greenfoot.World)
+comment3.text=\r\n\ Wird\ aufgerufen,\ wenn\ der\ GreenDot\ zur\ Welt\ hinzugef\u00FCgt\ wird.\r\n\ Skaliert\ das\ Bild\ auf\ die\ gew\u00FCnschte\ Gr\u00F6\u00DFe.\r\n
+comment4.params=
+comment4.target=void\ act()
+comment4.text=\r\n\ Bewegungslogik\:\ Vertikal\ pendeln.\r\n
+numComments=5

@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=InvertZone
+comment0.text=\r\n\ InvertZone\ \u2013\ Bereich\ mit\ invertierten\ Tasten\r\n\ Innerhalb\ dieser\ Zone\ sind\ links/rechts\ und\ oben/unten\ vertauscht.\r\n\ \r\n\ @author\ Felix\ Krusch\r\n\ @version\ 1.0\r\n
+comment1.params=width\ height
+comment1.target=InvertZone(int,\ int)
+comment1.text=\r\n\ Konstruktor.\r\n\ \r\n\ @param\ width\ \ Breite\ der\ Zone\r\n\ @param\ height\ H\u00F6he\ der\ Zone\r\n
+comment2.params=
+comment2.target=void\ act()
+numComments=3

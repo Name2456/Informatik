@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=LabeledWorld
+comment0.text=\r\n\ LabeledWorld\ \u2013\ Interface\ f\u00FCr\ Welten\ mit\ HUD-Anzeige\r\n\ \r\n\ @author\ Felix\ Krusch\r\n\ @version\ 1.0\r\n
+comment1.params=lives
+comment1.target=void\ showHUD(int)
+comment1.text=\r\n\ Zeichnet\ die\ HUD-Anzeige\ (Level,\ Leben).\r\n\ \r\n\ @param\ lives\ Aktuelle\ Lebenanzahl\r\n
+comment2.params=
+comment2.target=java.lang.String\ levelName()
+comment2.text=\r\n\ Gibt\ den\ Level-Namen\ zur\u00FCck.\r\n\ \r\n\ @return\ Name\ des\ Levels\r\n
+numComments=3

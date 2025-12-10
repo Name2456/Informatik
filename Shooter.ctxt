@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=Shooter
+comment0.text=\r\n\ Shooter\ \u2013\ Station\u00E4rer\ Gegner,\ der\ Projektile\ abfeuert\r\n\ \r\n\ @author\ Felix\ Krusch\r\n\ @version\ 1.0\r\n
+comment1.params=direction
+comment1.target=Shooter(int)
+comment1.text=\r\n\ Konstruktor.\r\n\ \r\n\ @param\ direction\ Schussrichtung\ (0\=hoch,\ 1\=runter,\ 2\=links,\ 3\=rechts)\r\n
+comment2.params=
+comment2.target=void\ act()
+comment2.text=\r\n\ Schusslogik\:\ Regelm\u00E4\u00DFig\ Projektile\ abfeuern.\r\n
+comment3.params=
+comment3.target=void\ fire()
+comment3.text=\r\n\ Feuert\ ein\ Projektil\ in\ die\ festgelegte\ Richtung\ ab.\r\n
+numComments=4

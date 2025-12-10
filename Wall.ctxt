@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=Wall
+comment0.text=\r\n\ Wall\ \u2013\ Hindernisse\ im\ Spiel\r\n\ Kann\ beliebig\ positioniert\ und\ skaliert\ werden.\r\n\ \r\n\ @author\ Felix\ Krusch\r\n\ @version\ 1.0\r\n
+comment1.params=
+comment1.target=void\ act()
+comment1.text=\r\n\ W\u00E4nde\ tun\ von\ alleine\ nichts.\r\n
+comment2.params=width\ height
+comment2.target=void\ setSize(int,\ int)
+comment2.text=\r\n\ Setzt\ die\ Gr\u00F6\u00DFe\ des\ Wall-Bilds.\r\n\ \r\n\ @param\ width\ \ Breite\ in\ Pixeln\r\n\ @param\ height\ H\u00F6he\ in\ Pixeln\r\n
+comment3.params=x\ y
+comment3.target=void\ setPos(int,\ int)
+comment3.text=\r\n\ Setzt\ die\ Position\ der\ Wand\ (obere\ linke\ Ecke).\r\n\ \r\n\ @param\ x\ X-Koordinate\ der\ oberen\ linken\ Ecke\r\n\ @param\ y\ Y-Koordinate\ der\ oberen\ linken\ Ecke\r\n
+comment4.params=x\ y\ width\ height
+comment4.target=void\ placeWall(int,\ int,\ int,\ int)
+comment4.text=\r\n\ Platziert\ diese\ Wand\ mit\ Position\ und\ Gr\u00F6\u00DFe.\r\n\ x,\ y\ beziehen\ sich\ auf\ die\ obere\ linke\ Ecke\!\r\n\ \r\n\ @param\ x\ \ \ \ \ \ X-Koordinate\ der\ oberen\ linken\ Ecke\r\n\ @param\ y\ \ \ \ \ \ Y-Koordinate\ der\ oberen\ linken\ Ecke\r\n\ @param\ width\ \ Breite\ der\ Wand\r\n\ @param\ height\ H\u00F6he\ der\ Wand\r\n
+numComments=5

@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.target=Level5
+comment0.text=\r\n\ Level5\ \u2013\ F\u00FCnftes\ und\ letztes\ Level\r\n\ InvertZone\ (verkehrte\ Tasten),\ RandomWalker,\ Strider\ \u2013\ kniffliges\ Finale\!\r\n\ \r\n\ @author\ Felix\ Krusch\r\n\ @version\ 1.0\r\n
+comment1.params=
+comment1.target=Level5()
+comment2.params=
+comment2.target=void\ setup()
+comment3.params=
+comment3.target=void\ label()
+comment4.params=lives
+comment4.target=void\ showHUD(int)
+comment5.params=
+comment5.target=java.lang.String\ levelName()
+numComments=6

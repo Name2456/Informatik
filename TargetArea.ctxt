@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=TargetArea
+comment0.text=\r\n\ TargetArea\ \u2013\ Zielbereich\r\n\ Wenn\ der\ Spieler\ diesen\ erreicht,\ geht\ es\ ins\ n\u00E4chste\ Level.\r\n\ \r\n\ @author\ Felix\ Krusch\r\n\ @version\ 1.0\r\n
+comment1.params=
+comment1.target=void\ act()
+comment1.text=\r\n\ Das\ Ziel\ tut\ von\ alleine\ nichts.\r\n\ Die\ Kollisionspr\u00FCfung\ erfolgt\ im\ Player.\r\n
+numComments=2

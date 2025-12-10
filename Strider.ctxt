@@ -1,0 +1,10 @@
+#BlueJ class context
+comment0.target=Strider
+comment0.text=\r\n\ Strider\ \u2013\ Geradeaus\ laufender\ Gegner\ mit\ Teleport\r\n\ W\u00E4hlt\ zu\ Beginn\ eine\ Richtung\ und\ teleportiert\ am\ Rand.\r\n\ \r\n\ @author\ Felix\ Krusch\r\n\ @version\ 1.0\r\n
+comment1.params=w
+comment1.target=void\ addedToWorld(greenfoot.World)
+comment1.text=\r\n\ Wird\ aufgerufen,\ wenn\ der\ Strider\ zur\ Welt\ hinzugef\u00FCgt\ wird.\r\n\ W\u00E4hlt\ eine\ zuf\u00E4llige\ Richtung.\r\n
+comment2.params=
+comment2.target=void\ act()
+comment2.text=\r\n\ Bewegungslogik\:\ Geradeaus\ +\ Teleport\ am\ Rand.\r\n
+numComments=3
