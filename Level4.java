@@ -1,47 +1,42 @@
 import greenfoot.*;
 
 /**
- * Level4 - Seitenwind, Shooter und Follower.
+ * Level4 - "Wind Tunnel" - WindZone-Parcours mit Verfolgung.
  * 
- * Level4 führt drei neue Spielmechaniken ein:
- * 1. WindZone: Eine Zone, die den Spieler kontinuierlich zur Seite schiebt
- * 2. Shooter: Stationäre Gegner, die Projektile abfeuern
- * 3. Follower: Gegner, die den Spieler aktiv verfolgen
- * 
- * Diese Kombination erfordert völlig neue Strategien und macht das Level
- * deutlich schwieriger als die vorherigen.
+ * Level4 führt die WindZone als Hauptmechanik ein. Der Spieler muss durch
+ * mehrere Bereiche navigieren, wobei der Wind ihn kontinuierlich zur Seite
+ * schiebt. Kombiniert mit Followern und einem Shooter wird dies zu einer
+ * intensiven Herausforderung.
  * 
  * Layout-Beschreibung:
- * - Labyrinth-artiges Design mit vier vertikalen Wänden
- * - Große WindZone im mittleren Bereich (schiebt nach links)
+ * - Vier vertikale Gänge, die nach unten führen
  * - Spieler startet oben links (30, 30)
  * - Ziel ist unten rechts (560, 360)
+ * - WindZone im zweiten Gang als Hauptherausforderung
  * 
- * Gegner-Kombination:
- * - 1 Shooter (schießt nach rechts)
- * - 2 Follower (verfolgen den Spieler)
- * - 1 BlueDot (zusätzliche Herausforderung)
- * 
- * Neue Mechaniken:
- * - WindZone: Spieler wird kontinuierlich nach links geschoben
- *   → Muss gegen den Wind ankämpfen (mehr rechts-Tasten drücken)
- * - Shooter: Feuert regelmäßig Projektile ab
- *   → Spieler muss Schussmuster lernen und Timing beachten
- * - Follower: Bewegen sich auf Spieler zu
- *   → Spieler muss ständig in Bewegung bleiben
+ * Gegner-Strategie:
+ * - Gang 1: 1 BlueDot (Aufwärmung)
+ * - Gang 2: WindZone (schiebt nach links)
+ * - Gang 3: 2 Follower (treiben Spieler vorwärts)
+ * - Gang 4: 1 Shooter + 1 BlueDot (Finale)
  * 
  * Lösungsstrategie:
- * 1. Nach rechts durch die erste Lücke
- * 2. Nach unten (Shooter-Projektile vermeiden)
- * 3. Durch WindZone navigieren (gegen Wind ankämpfen)
- * 4. Follower abschütteln durch schnelle Bewegung
- * 5. Nach rechts zum Ziel
+ * 1. Nach unten durch Gang 1 (BlueDot vermeiden)
+ * 2. Nach rechts in Gang 2 (gegen Wind ankämpfen!)
+ * 3. Nach unten durch Gang 3 (Follower entkommen)
+ * 4. Nach rechts in Gang 4 (Shooter-Projektile + BlueDot vermeiden)
+ * 5. Zum Ziel
  * 
- * Schwierigkeitsgrad: Schwer (neue Mechaniken + aktive Verfolgung)
- * Geschätzte Zeit: 30-50 Sekunden
+ * Neue Mechanik:
+ * - WindZone als Hauptherausforderung (nicht nur Dekoration)
+ * - Follower treiben Spieler in gefährliche Bereiche
+ * - Kombination aus Wind + Verfolgung + Projektilen
+ * 
+ * Schwierigkeitsgrad: Schwer (Wind + aktive Verfolgung)
+ * Geschätzte Zeit: 35-50 Sekunden
  * 
  * @author Felix Krusch
- * @version 2.0
+ * @version 3.0 (Redesigned)
  */
 public class Level4 extends World implements LabeledWorld {
     
@@ -56,30 +51,28 @@ public class Level4 extends World implements LabeledWorld {
     /** Zellgröße (1 = 1 Pixel pro Zelle) */
     private static final int CELL_SIZE = 1;
     
+    // Wand-Dicke
+    /** Standard-Wanddicke */
+    private static final int WALL_THICKNESS = 50;
+    
+    // Gang-Breiten
+    /** Breite jedes vertikalen Gangs */
+    private static final int CORRIDOR_WIDTH = 130;
+    
     // WindZone-Parameter
     /** Windstärke in X-Richtung (negativ = nach links) */
     private static final int WIND_DX = -1;
     /** Windstärke in Y-Richtung (0 = kein vertikaler Wind) */
     private static final int WIND_DY = 0;
-    /** Breite der WindZone */
-    private static final int WIND_WIDTH = 140;
-    /** Höhe der WindZone (gesamte Höhe der Welt) */
-    private static final int WIND_HEIGHT = 400;
     
     // Shooter-Parameter
-    /** Schussrichtung: 3 = nach rechts */
-    private static final int SHOOTER_DIRECTION = 3;
+    /** Schussrichtung: 1 = nach unten */
+    private static final int SHOOTER_DIRECTION = 1;
     
     // ==================== KONSTRUKTOR ====================
     
     /**
      * Erstellt Level4 und initialisiert alle Spielelemente.
-     * 
-     * Ablauf:
-     * 1. Welt mit 600x400 Pixeln erstellen
-     * 2. Wände, Gegner, Spezialzonen und Ziel platzieren (setup)
-     * 3. Spieler hinzufügen
-     * 4. HUD initialisieren (label)
      */
     public Level4() {
         super(WORLD_WIDTH, WORLD_HEIGHT, CELL_SIZE);
@@ -94,122 +87,119 @@ public class Level4 extends World implements LabeledWorld {
      * Platziert alle Wände, Gegner, Spezialzonen und das Ziel im Level.
      * 
      * Layout-Logik:
-     * Das Level ist in mehrere vertikale Gänge unterteilt:
+     * Das Level besteht aus vier vertikalen Gängen:
      * 
-     * GANG 1 (Links): Startbereich
-     * - Spieler startet hier
-     * - Relativ sicher, aber Follower können hierher kommen
+     * GANG 1 (Links): Startbereich mit BlueDot
+     * - Einfache Aufwärmung
+     * - 1 BlueDot als erste Herausforderung
      * 
      * GANG 2 (Mitte-Links): WindZone-Bereich
      * - Große WindZone schiebt Spieler nach links
-     * - Spieler muss gegen Wind ankämpfen
-     * - Shooter feuert Projektile durch diesen Bereich
+     * - Spieler muss gegen Wind ankämpfen (mehr rechts-Tasten)
+     * - Keine zusätzlichen Gegner (Wind ist Herausforderung genug)
      * 
-     * GANG 3 (Mitte-Rechts): Gefährlicher Bereich
-     * - Follower patrouillieren hier
-     * - Enger Durchgang
+     * GANG 3 (Mitte-Rechts): Follower-Zone
+     * - 2 Follower verfolgen Spieler
+     * - Enger Gang macht Flucht schwierig
+     * - Follower treiben Spieler vorwärts
      * 
-     * GANG 4 (Rechts): Finale Passage
-     * - BlueDot als letzte Herausforderung
-     * - Führt zum Ziel
+     * GANG 4 (Rechts): Finale mit Shooter und BlueDot
+     * - Shooter feuert nach unten
+     * - BlueDot als zusätzliche Herausforderung
+     * - Ziel am Ende
      */
     private void setup() {
         // === WÄNDE ===
         
-        // === WAND 1: Erste vertikale Barriere ===
-        // Trennt Startbereich von WindZone
-        // Lücke zwischen Y=250 und Y=300 für Durchgang
+        // === WAND 1: Trennt Gang 1 von Gang 2 ===
+        // Vertikale Wand, lässt oben und unten Durchgänge
+        // Höhe: 200 Pixel (Durchgang oben und unten)
         Wall wall1 = new Wall();
         addObject(wall1, 0, 0);
-        wall1.placeWall(150, 0, 50, 250);
+        wall1.placeWall(CORRIDOR_WIDTH, 100, WALL_THICKNESS, 200);
         
-        // === WAND 1B: Unterer Teil der ersten Barriere ===
-        // Fortsetzung von Wand 1 nach der Lücke
-        Wall wall1b = new Wall();
-        addObject(wall1b, 0, 0);
-        wall1b.placeWall(150, 300, 50, 100);
-        
-        // === WAND 2: Zweite vertikale Barriere ===
-        // Trennt WindZone vom mittleren Bereich
-        // Lücke oben für Durchgang
+        // === WAND 2: Trennt Gang 2 von Gang 3 ===
+        // Vertikale Wand, lässt oben und unten Durchgänge
+        // Höhe: 200 Pixel (Durchgang oben und unten)
         Wall wall2 = new Wall();
         addObject(wall2, 0, 0);
-        wall2.placeWall(300, 150, 50, 250);
+        wall2.placeWall(CORRIDOR_WIDTH * 2 + WALL_THICKNESS, 100, WALL_THICKNESS, 200);
         
-        // === WAND 3: Dritte vertikale Barriere ===
-        // Trennt mittleren Bereich vom finalen Gang
-        // Lücke zwischen Y=250 und Y=400 für Durchgang
+        // === WAND 3: Trennt Gang 3 von Gang 4 ===
+        // Vertikale Wand, lässt oben und unten Durchgänge
+        // Höhe: 200 Pixel (Durchgang oben und unten)
         Wall wall3 = new Wall();
         addObject(wall3, 0, 0);
-        wall3.placeWall(450, 0, 50, 250);
+        wall3.placeWall(CORRIDOR_WIDTH * 3 + WALL_THICKNESS * 2, 100, WALL_THICKNESS, 200);
         
         // === ZIEL ===
         
-        // Ziel unten rechts (im finalen Gang)
-        // Spieler muss durch alle Gänge navigieren
+        // Ziel unten rechts (am Ende von Gang 4)
         addObject(new TargetArea(), 560, 360);
         
         // === SPEZIALZONEN ===
         
-        // === WindZone: Seitenwind nach links ===
-        // Positioniert im zweiten Gang (zwischen Wand 1 und Wand 2)
+        // === WindZone: Im gesamten Gang 2 ===
         // Schiebt Spieler kontinuierlich nach links (windDx = -1)
         // Spieler muss mehr rechts-Tasten drücken, um voranzukommen
-        // Breite: 140 Pixel, Höhe: gesamte Welt (400 Pixel)
-        // Zentrum bei X=225, Y=200
-        addObject(new WindZone(WIND_DX, WIND_DY, WIND_WIDTH, WIND_HEIGHT), 225, 200);
+        // Breite: CORRIDOR_WIDTH (gesamter Gang)
+        // Höhe: 400 (gesamte Höhe)
+        // Zentrum: Mitte von Gang 2
+        int windZoneX = CORRIDOR_WIDTH + WALL_THICKNESS + CORRIDOR_WIDTH / 2;
+        addObject(new WindZone(WIND_DX, WIND_DY, CORRIDOR_WIDTH, WORLD_HEIGHT), 
+                 windZoneX, WORLD_HEIGHT / 2);
         
         // === GEGNER ===
         
-        // === Shooter: Stationärer Gegner mit Projektilen ===
-        // Positioniert im ersten Gang unten
-        // Schießt nach rechts (Richtung 3) durch die WindZone
-        // Projektile fliegen durch die WindZone und gefährden den Spieler
-        // Position: X=170, Y=320 (nahe der unteren Lücke)
-        addObject(new Shooter(SHOOTER_DIRECTION), 170, 320);
+        // === GANG 1: BlueDot als Aufwärmung ===
+        // Bewegt sich vertikal im ersten Gang
+        // Geschwindigkeit: 2 (mittel)
+        // Bewegungsbereich: Y=120 bis Y=280
+        addObject(new GreenDot(120, 280, 2, 35), CORRIDOR_WIDTH / 2, 200);
         
-        // === Follower: Verfolgende Gegner ===
+        // === GANG 2: Keine Gegner ===
+        // WindZone ist Herausforderung genug!
         
-        // Follower 1: Im mittleren Bereich oben
-        // Verfolgt Spieler aktiv, sobald er in Reichweite ist
-        // Position: X=400, Y=100
-        addObject(new Follower(), 400, 100);
+        // === GANG 3: Follower ===
         
-        // Follower 2: Im rechten Bereich
+        // Follower 1: Oberer Bereich von Gang 3
+        // Verfolgt Spieler aktiv
+        // Position: Mitte von Gang 3, Y=120
+        int gang3X = CORRIDOR_WIDTH * 2 + WALL_THICKNESS + CORRIDOR_WIDTH / 2;
+        addObject(new Follower(), gang3X, 120);
+        
+        // Follower 2: Unterer Bereich von Gang 3
         // Zweiter Follower für erhöhte Schwierigkeit
-        // Position: X=520, Y=200
-        addObject(new Follower(), 520, 200);
+        // Position: Mitte von Gang 3, Y=280
+        addObject(new Follower(), gang3X, 280);
         
-        // === BlueDot: Zusätzliche Herausforderung ===
-        // Im finalen Gang vor dem Ziel
-        // Bewegt sich horizontal zwischen X=360 und X=440
+        // === GANG 4: Shooter + BlueDot ===
+        
+        // Shooter: Oben in Gang 4
+        // Schießt nach unten (Richtung 1)
+        // Projektile fliegen durch den Gang
+        // Position: Mitte von Gang 4, Y=80
+        int gang4X = CORRIDOR_WIDTH * 3 + WALL_THICKNESS * 2 + CORRIDOR_WIDTH / 2;
+        addObject(new Shooter(SHOOTER_DIRECTION), gang4X, 80);
+        
+        // BlueDot: Mitte von Gang 4
+        // Bewegt sich horizontal (enger Bereich)
         // Geschwindigkeit: 3 (schnell)
-        // Position: X=400, Y=300
-        addObject(new BlueDot(360, 440, 3), 400, 300);
+        // Bewegungsbereich: X=gang4X-40 bis X=gang4X+40
+        addObject(new BlueDot(gang4X - 40, gang4X + 40, 3), gang4X, 250);
     }
     
     // ==================== HUD-VERWALTUNG ====================
     
     /**
      * Initialisiert das HUD (Heads-Up Display) für dieses Level.
-     * 
-     * Ablauf:
-     * 1. Level-Name unten links anzeigen
-     * 2. Spieler-Objekt finden
-     * 3. Leben auf 5 zurücksetzen (neues Level)
-     * 4. HUD mit Leben-Anzeige aktualisieren
      */
     private void label() {
-        // Level-Name unten links anzeigen
         showText(levelName(), 70, 380);
-        
-        // Spieler finden und Leben zurücksetzen
         Player p = getObjects(Player.class).isEmpty() ? null : getObjects(Player.class).get(0);
         if (p != null) {
             p.resetLives();
         }
-        
-        // HUD mit 5 Leben initialisieren
         showHUD(5);
     }
     
@@ -231,6 +221,6 @@ public class Level4 extends World implements LabeledWorld {
      */
     @Override
     public String levelName() {
-        return "Level 4";
+        return "Level 4 - Wind Tunnel";
     }
 }

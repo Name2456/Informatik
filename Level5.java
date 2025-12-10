@@ -1,51 +1,43 @@
 import greenfoot.*;
 
 /**
- * Level5 - Das finale Level mit allen Mechaniken.
+ * Level5 - "Inversion Madness" - Das finale Level mit InvertZone.
  * 
- * Level5 ist das schwierigste und letzte Level des Spiels. Es kombiniert
- * alle bisher eingeführten Mechaniken und Gegnertypen in einem kniffligen
- * Finale. Die InvertZone fügt eine zusätzliche Herausforderung hinzu,
- * die präzise Kontrolle und Anpassungsfähigkeit erfordert.
+ * Level5 ist das schwierigste Level im Spiel. Es kombiniert alle bisherigen
+ * Mechaniken und führt die InvertZone als ultimative Herausforderung ein.
+ * Die InvertZone kehrt die Steuerung um, was mentale Anpassung erfordert.
  * 
  * Layout-Beschreibung:
- * - Enger Parcours mit vier vertikalen Wänden
- * - Große InvertZone im mittleren Bereich (verkehrte Steuerung!)
+ * - Fünf vertikale Gänge, die nach unten führen
  * - Spieler startet oben links (30, 30)
- * - Ziel ist ganz rechts unten (565, 360)
+ * - Ziel ist unten rechts (560, 360)
+ * - Große InvertZone in Gang 3 als Hauptherausforderung
  * 
- * Gegner-Kombination (alle Typen!):
- * - 1 RandomWalker (zufällige Bewegung)
- * - 2 Strider (teleportierende Gegner)
- * - 1 GreenDot (vertikal)
- * - 1 Pulsar (pulsierend)
- * - 1 Shooter (Projektile)
- * 
- * Neue Mechanik:
- * - InvertZone: Steuerung wird umgekehrt
- *   → Links-Taste bewegt nach rechts
- *   → Rechts-Taste bewegt nach links
- *   → Oben-Taste bewegt nach unten
- *   → Unten-Taste bewegt nach oben
- *   → Erfordert mentale Anpassung und präzise Kontrolle
+ * Gegner-Strategie:
+ * - Gang 1: 1 RandomWalker (unvorhersehbar)
+ * - Gang 2: 2 Strider (schnell und gefährlich)
+ * - Gang 3: GROSSE InvertZone + 2 GreenDots (Hauptherausforderung!)
+ * - Gang 4: 1 Pulsar (Timing)
+ * - Gang 5: 1 Shooter + 1 BlueDot (Finale)
  * 
  * Lösungsstrategie:
- * 1. Nach unten durch den ersten Gang (RandomWalker vermeiden)
- * 2. Nach rechts in den zweiten Gang (Strider vermeiden)
- * 3. ACHTUNG: InvertZone betreten (Steuerung umkehren!)
- * 4. Durch InvertZone navigieren (mit invertierter Steuerung)
- * 5. Nach oben im dritten Gang (GreenDot vermeiden)
- * 6. Durch den vierten Gang (Pulsar-Timing beachten)
- * 7. Shooter-Projektile vermeiden
- * 8. Zum Ziel ganz rechts
+ * 1. Nach unten durch Gang 1 (RandomWalker ausweichen)
+ * 2. Nach rechts in Gang 2 (Strider vermeiden - sie sind schnell!)
+ * 3. Nach unten durch Gang 3 (IN der InvertZone mit umgekehrter Steuerung!)
+ * 4. Nach rechts in Gang 4 (Pulsar-Timing abpassen)
+ * 5. Nach unten durch Gang 5 (Shooter + BlueDot vermeiden)
+ * 6. Zum Ziel
  * 
- * Schwierigkeitsgrad: Sehr Schwer (alle Mechaniken + InvertZone)
- * Geschätzte Zeit: 40-60 Sekunden
+ * Neue Mechanik:
+ * - InvertZone als großer Bereich (nicht nur kleiner Fleck)
+ * - GreenDots IN der InvertZone (mit umgekehrter Steuerung ausweichen!)
+ * - Kombination aller Gegnertypen für maximale Schwierigkeit
  * 
- * Besonderheit: Nach diesem Level erscheint der Gratulationstext!
+ * Schwierigkeitsgrad: Sehr Schwer (Invertierung + alle Mechaniken)
+ * Geschätzte Zeit: 45-60 Sekunden (oder länger beim ersten Versuch!)
  * 
  * @author Felix Krusch
- * @version 2.0
+ * @version 3.0 (Redesigned)
  */
 public class Level5 extends World implements LabeledWorld {
     
@@ -60,26 +52,28 @@ public class Level5 extends World implements LabeledWorld {
     /** Zellgröße (1 = 1 Pixel pro Zelle) */
     private static final int CELL_SIZE = 1;
     
+    // Wand-Dicke
+    /** Standard-Wanddicke */
+    private static final int WALL_THICKNESS = 40;
+    
+    // Gang-Breiten
+    /** Breite jedes vertikalen Gangs */
+    private static final int CORRIDOR_WIDTH = 100;
+    
     // InvertZone-Parameter
-    /** Breite der InvertZone */
-    private static final int INVERT_WIDTH = 120;
-    /** Höhe der InvertZone (gesamte Höhe der Welt) */
-    private static final int INVERT_HEIGHT = 400;
+    /** Breite der InvertZone (gesamter Gang 3) */
+    private static final int INVERT_ZONE_WIDTH = CORRIDOR_WIDTH;
+    /** Höhe der InvertZone (fast gesamte Höhe) */
+    private static final int INVERT_ZONE_HEIGHT = 350;
     
     // Shooter-Parameter
-    /** Schussrichtung: 2 = nach links */
-    private static final int SHOOTER_DIRECTION = 2;
+    /** Schussrichtung: 1 = nach unten */
+    private static final int SHOOTER_DIRECTION = 1;
     
     // ==================== KONSTRUKTOR ====================
     
     /**
      * Erstellt Level5 und initialisiert alle Spielelemente.
-     * 
-     * Ablauf:
-     * 1. Welt mit 600x400 Pixeln erstellen
-     * 2. Wände, Gegner, Spezialzonen und Ziel platzieren (setup)
-     * 3. Spieler hinzufügen
-     * 4. HUD initialisieren (label)
      */
     public Level5() {
         super(WORLD_WIDTH, WORLD_HEIGHT, CELL_SIZE);
@@ -94,146 +88,141 @@ public class Level5 extends World implements LabeledWorld {
      * Platziert alle Wände, Gegner, Spezialzonen und das Ziel im Level.
      * 
      * Layout-Logik:
-     * Das Level ist in fünf enge vertikale Gänge unterteilt:
+     * Das Level besteht aus fünf vertikalen Gängen:
      * 
      * GANG 1 (Links): Startbereich mit RandomWalker
-     * - Spieler startet hier
-     * - RandomWalker bewegt sich zufällig (unvorhersehbar)
+     * - RandomWalker bewegt sich unvorhersehbar
+     * - Spieler muss vorsichtig sein
      * 
      * GANG 2 (Mitte-Links): Strider-Zone
-     * - 2 Strider teleportieren am Rand
-     * - Sehr gefährlich, da Strider schnell sind
+     * - 2 Strider bewegen sich schnell und teleportieren
+     * - Sehr gefährlich, aber vorhersehbar
      * 
-     * GANG 3 (Mitte): InvertZone mit GreenDot
-     * - Große InvertZone (verkehrte Steuerung!)
-     * - GreenDot bewegt sich vertikal
-     * - Kombination ist sehr schwierig
+     * GANG 3 (Mitte): GROSSE InvertZone mit GreenDots
+     * - Gesamter Gang ist InvertZone!
+     * - Steuerung ist umgekehrt (links→rechts, oben→unten)
+     * - 2 GreenDots bewegen sich vertikal
+     * - SCHWIERIGSTE HERAUSFORDERUNG IM SPIEL!
      * 
-     * GANG 4 (Mitte-Rechts): Pulsar-Passage
-     * - Pulsar pulsiert vor dem Durchgang
-     * - Timing ist entscheidend
+     * GANG 4 (Mitte-Rechts): Pulsar-Zone
+     * - 1 Pulsar als Engstelle
+     * - Timing erforderlich
      * 
-     * GANG 5 (Rechts): Finale Passage mit Shooter
-     * - Shooter feuert nach links
-     * - Ziel ist am Ende dieses Gangs
+     * GANG 5 (Rechts): Finale mit Shooter und BlueDot
+     * - Shooter feuert nach unten
+     * - BlueDot als letzte Herausforderung
+     * - Ziel am Ende
      */
     private void setup() {
         // === WÄNDE ===
         
-        // === WAND 1: Erste vertikale Barriere ===
-        // Trennt Startbereich (Gang 1) von Strider-Zone (Gang 2)
-        // Lücke zwischen Y=80 und Y=320 für Durchgang
+        // === WAND 1: Trennt Gang 1 von Gang 2 ===
         Wall wall1 = new Wall();
         addObject(wall1, 0, 0);
-        wall1.placeWall(120, 80, 40, 240);
+        wall1.placeWall(CORRIDOR_WIDTH, 80, WALL_THICKNESS, 240);
         
-        // === WAND 2: Zweite vertikale Barriere ===
-        // Trennt Strider-Zone (Gang 2) von InvertZone (Gang 3)
-        // Lücke zwischen Y=0 und Y=280 für Durchgang
+        // === WAND 2: Trennt Gang 2 von Gang 3 (InvertZone) ===
         Wall wall2 = new Wall();
         addObject(wall2, 0, 0);
-        wall2.placeWall(250, 0, 40, 280);
+        wall2.placeWall(CORRIDOR_WIDTH * 2 + WALL_THICKNESS, 80, WALL_THICKNESS, 240);
         
-        // === WAND 3: Dritte vertikale Barriere ===
-        // Trennt InvertZone (Gang 3) von Pulsar-Passage (Gang 4)
-        // Lücke zwischen Y=120 und Y=400 für Durchgang
+        // === WAND 3: Trennt Gang 3 (InvertZone) von Gang 4 ===
         Wall wall3 = new Wall();
         addObject(wall3, 0, 0);
-        wall3.placeWall(380, 120, 40, 280);
+        wall3.placeWall(CORRIDOR_WIDTH * 3 + WALL_THICKNESS * 2, 80, WALL_THICKNESS, 240);
         
-        // === WAND 4: Vierte vertikale Barriere ===
-        // Trennt Pulsar-Passage (Gang 4) von finaler Passage (Gang 5)
-        // Lücke zwischen Y=0 und Y=250 für Durchgang
+        // === WAND 4: Trennt Gang 4 von Gang 5 ===
         Wall wall4 = new Wall();
         addObject(wall4, 0, 0);
-        wall4.placeWall(510, 0, 40, 250);
+        wall4.placeWall(CORRIDOR_WIDTH * 4 + WALL_THICKNESS * 3, 80, WALL_THICKNESS, 240);
         
         // === ZIEL ===
         
-        // Ziel ganz rechts unten (am Ende von Gang 5)
-        // Spieler muss durch alle fünf Gänge navigieren
-        addObject(new TargetArea(), 565, 360);
+        // Ziel unten rechts (am Ende von Gang 5)
+        addObject(new TargetArea(), 560, 360);
         
         // === SPEZIALZONEN ===
         
-        // === InvertZone: Verkehrte Steuerung ===
-        // Positioniert im dritten Gang (zwischen Wand 2 und Wand 3)
-        // In dieser Zone ist die Steuerung komplett invertiert:
-        // - Links → Rechts
-        // - Rechts → Links
-        // - Oben → Unten
-        // - Unten → Oben
-        // Breite: 120 Pixel, Höhe: gesamte Welt (400 Pixel)
-        // Zentrum bei X=315, Y=200
-        // Diese Zone ist die größte Herausforderung des Levels!
-        addObject(new InvertZone(INVERT_WIDTH, INVERT_HEIGHT), 315, 200);
+        // === InvertZone: Im gesamten Gang 3 ===
+        // GROSSE InvertZone, die den gesamten Gang 3 ausfüllt
+        // Steuerung ist hier umgekehrt:
+        // - Links-Taste → Bewegung nach rechts
+        // - Rechts-Taste → Bewegung nach links
+        // - Oben-Taste → Bewegung nach unten
+        // - Unten-Taste → Bewegung nach oben
+        // Dies ist die schwierigste Mechanik im Spiel!
+        int invertZoneX = CORRIDOR_WIDTH * 2 + WALL_THICKNESS + CORRIDOR_WIDTH / 2;
+        addObject(new InvertZone(INVERT_ZONE_WIDTH, INVERT_ZONE_HEIGHT), 
+                 invertZoneX, WORLD_HEIGHT / 2);
         
         // === GEGNER ===
         
         // === GANG 1: RandomWalker ===
-        // Bewegt sich zufällig in alle Richtungen
-        // Unvorhersehbar, aber langsam
-        // Position: X=60, Y=200 (Mitte des ersten Gangs)
-        addObject(new RandomWalker(), 60, 200);
+        // Bewegt sich zufällig im ersten Gang
+        // Unvorhersehbar, aber nicht zu gefährlich
+        addObject(new RandomWalker(), CORRIDOR_WIDTH / 2, 200);
         
-        // === GANG 2: Strider (2 Stück) ===
+        // === GANG 2: Strider ===
         
-        // Strider 1: Oberer Bereich
-        // Bewegt sich geradeaus und teleportiert am Rand
-        // Position: X=185, Y=150
-        addObject(new Strider(), 185, 150);
+        // Strider 1: Oberer Bereich von Gang 2
+        // Bewegt sich schnell in zufällige Richtung
+        // Teleportiert am Rand
+        int gang2X = CORRIDOR_WIDTH + WALL_THICKNESS + CORRIDOR_WIDTH / 2;
+        addObject(new Strider(), gang2X, 140);
         
-        // Strider 2: Unterer Bereich
+        // Strider 2: Unterer Bereich von Gang 2
         // Zweiter Strider für erhöhte Schwierigkeit
-        // Position: X=185, Y=350
-        addObject(new Strider(), 185, 350);
+        addObject(new Strider(), gang2X, 260);
         
-        // === GANG 3: GreenDot in der InvertZone ===
-        // Bewegt sich vertikal in der InvertZone
-        // Kombination mit invertierter Steuerung ist sehr schwierig!
-        // Bewegt sich zwischen Y=130 und Y=390
-        // Geschwindigkeit: 3 (schnell), Größe: 25 (klein)
-        // Position: X=315, Y=250 (Mitte der InvertZone)
-        addObject(new GreenDot(130, 390, 3, 25), 315, 250);
+        // === GANG 3: GreenDots IN der InvertZone ===
+        
+        // GreenDot 1: Oberer Bereich der InvertZone
+        // Bewegt sich vertikal
+        // Geschwindigkeit: 2, Größe: 30
+        // ACHTUNG: Spieler muss mit umgekehrter Steuerung ausweichen!
+        addObject(new GreenDot(100, 300, 2, 30), invertZoneX, 150);
+        
+        // GreenDot 2: Unterer Bereich der InvertZone
+        // Bewegt sich vertikal
+        // Geschwindigkeit: 2, Größe: 30
+        // Kombination beider GreenDots in InvertZone = SEHR SCHWER!
+        addObject(new GreenDot(100, 300, 2, 30), invertZoneX, 250);
         
         // === GANG 4: Pulsar ===
-        // Pulsiert vor dem Durchgang zu Gang 5
-        // Spieler muss Timing abpassen (wenn Pulsar klein ist)
-        // Pulsiert zwischen 25 und 55 Pixeln
-        // Delta: 2 (mittlere Geschwindigkeit)
-        // Position: X=445, Y=300
-        addObject(new Pulsar(25, 55, 2), 445, 300);
         
-        // === GANG 5: Shooter ===
-        // Stationärer Gegner am Ende des Levels
-        // Schießt nach links (Richtung 2) durch Gang 5
-        // Spieler muss Projektile vermeiden, während er zum Ziel läuft
-        // Position: X=530, Y=50 (oben im Gang)
-        addObject(new Shooter(SHOOTER_DIRECTION), 530, 50);
+        // Pulsar: Mitte von Gang 4
+        // Pulsiert zwischen 25 und 50 Pixeln
+        // Delta: 2 (mittlere Geschwindigkeit)
+        // Timing erforderlich, um durchzukommen
+        int gang4X = CORRIDOR_WIDTH * 3 + WALL_THICKNESS * 2 + CORRIDOR_WIDTH / 2;
+        addObject(new Pulsar(25, 50, 2), gang4X, 200);
+        
+        // === GANG 5: Shooter + BlueDot ===
+        
+        // Shooter: Oben in Gang 5
+        // Schießt nach unten (Richtung 1)
+        // Projektile fliegen durch den Gang
+        int gang5X = CORRIDOR_WIDTH * 4 + WALL_THICKNESS * 3 + CORRIDOR_WIDTH / 2;
+        addObject(new Shooter(SHOOTER_DIRECTION), gang5X, 70);
+        
+        // BlueDot: Mitte von Gang 5
+        // Bewegt sich horizontal (enger Bereich)
+        // Geschwindigkeit: 3 (schnell)
+        // Letzte Herausforderung vor dem Ziel!
+        addObject(new BlueDot(gang5X - 35, gang5X + 35, 3), gang5X, 250);
     }
     
     // ==================== HUD-VERWALTUNG ====================
     
     /**
      * Initialisiert das HUD (Heads-Up Display) für dieses Level.
-     * 
-     * Ablauf:
-     * 1. Level-Name unten links anzeigen
-     * 2. Spieler-Objekt finden
-     * 3. Leben auf 5 zurücksetzen (neues Level)
-     * 4. HUD mit Leben-Anzeige aktualisieren
      */
     private void label() {
-        // Level-Name unten links anzeigen
         showText(levelName(), 70, 380);
-        
-        // Spieler finden und Leben zurücksetzen
         Player p = getObjects(Player.class).isEmpty() ? null : getObjects(Player.class).get(0);
         if (p != null) {
             p.resetLives();
         }
-        
-        // HUD mit 5 Leben initialisieren
         showHUD(5);
     }
     
@@ -244,8 +233,8 @@ public class Level5 extends World implements LabeledWorld {
      */
     @Override
     public void showHUD(int lives) {
-        showText("Level: 5", 90, 20);
-        showText("Leben: " + lives, 200, 20);
+        showText("Level: 5", 70, 20);
+        showText("Leben: " + lives, 170, 20);
     }
     
     /**
@@ -255,6 +244,6 @@ public class Level5 extends World implements LabeledWorld {
      */
     @Override
     public String levelName() {
-        return "Level 5";
+        return "Level 5 - Inversion Madness";
     }
 }
