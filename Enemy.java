@@ -62,7 +62,7 @@ public class Enemy extends Actor {
      * 
      * @return true, wenn der Gegner am Rand ist, sonst false
      */
-    protected boolean isAtEdge() {
+    public boolean isAtEdge() {
         return getX() <= 0 || getX() >= getWorld().getWidth() - 1 ||
                getY() <= 0 || getY() >= getWorld().getHeight() - 1;
     }
